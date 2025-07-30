@@ -43,8 +43,7 @@ def remove_text():
         return send_file(io.BytesIO(buffer), mimetype='image/png')
 
     except Exception as e:
-        print(f"🔥 Error: {e}")
-        return f"Error occurred: {str(e)}", 500
+        return str(e), 500
 
 @app.route('/')
 def index():
