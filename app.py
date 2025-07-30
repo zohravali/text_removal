@@ -31,19 +31,15 @@ def inpaint_text(img):
 
 @app.route('/remove-text', methods=['POST'])
 def remove_text():
-     try:
-        if 'image' not in request.files:
-            return 'No image uploaded', 400
+    if 'image' not in request.files:
+        return 'No image uploaded', 400
 
-        file = request.files['image']
-        image = keras_ocr.tools.read(file.stream)
-        result = inpaint_text(image)
+    file = request.files['image']
+    image = keras_ocr.tools.read(file.stream)
+    result = inpaint_text(image)
 
-        _, buffer = cv2.imencode('.png', result)
-        return send_file(io.BytesIO(buffer), mimetype='image/png')
-
-    except Exception as e:
-        return str(e), 500
+    _, buffer = cv2.imencode('.png', result)
+    return send_file(io.BytesIO(buffer), mimetype='image/png')
 
 @app.route('/')
 def index():
